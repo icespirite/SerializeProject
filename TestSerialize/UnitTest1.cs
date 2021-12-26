@@ -8,7 +8,7 @@ namespace TestSerialize
     public class UnitTest1
     {
         [Fact]
-        public void Test1()
+        public void SerializationTest()
         {
             Stream stream = new MemoryStream();
             ListRandom randomListChecking = new ListRandom();
@@ -29,9 +29,6 @@ namespace TestSerialize
                 Assert.Equal(currentNodeChecking.Data, currentNodeCheckable.Data);
                 if (currentNodeChecking.Previous != null && currentNodeCheckable.Previous != null)
                     Assert.Equal(currentNodeChecking.Previous.Data, currentNodeCheckable.Previous.Data);
-
-                if (currentNodeChecking.Next != null && currentNodeCheckable.Previous != null)
-                    Assert.Equal(currentNodeChecking.Next.Data, currentNodeCheckable.Next.Data);
 
                 Assert.Equal(currentNodeChecking.Random.Data, currentNodeCheckable.Random.Data);
 

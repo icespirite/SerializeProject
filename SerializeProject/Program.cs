@@ -23,7 +23,7 @@ namespace SerializeProject
         public ListNode Head;
         public ListNode Tail;
         public int Count;
-        private int[] masIdRandomElement;
+        private int[] randomLinksMap;
 
         public void Add(string data)
         {
@@ -48,11 +48,11 @@ namespace SerializeProject
         public void SetRandom()
         {
             Random rand = new Random();
-            masIdRandomElement = new int[Count];
+            randomLinksMap = new int[Count];
             for (int i = 0; i < Count; i++)
-            {               
-                masIdRandomElement[i] = rand.Next(0, Count);                
-                Get(i).Random = Get(masIdRandomElement[i]);
+            {
+                randomLinksMap[i] = rand.Next(0, Count);                
+                Get(i).Random = Get(randomLinksMap[i]);
                
             }
         }
@@ -78,7 +78,7 @@ namespace SerializeProject
                 byte[] bytes = Encoding.UTF8.GetBytes(currentNode.Data);
                 s.Write(BitConverter.GetBytes(bytes.Length));
                 s.Write(bytes);
-                s.Write(BitConverter.GetBytes(masIdRandomElement[i])); 
+                s.Write(BitConverter.GetBytes(randomLinksMap[i])); 
                 
             }            
            
@@ -88,7 +88,7 @@ namespace SerializeProject
             byte[] buff = new byte[4];
             s.Read(buff);
             int count = BitConverter.ToInt32(buff);
-            int[] masIdRandomElements = new int[count];
+            int[] randomLinksMap = new int[count];
             Clear();
             for (int i = 0; i < count; i++)
             {
@@ -98,12 +98,12 @@ namespace SerializeProject
                 s.Read(stringByte);
                 Add(Encoding.UTF8.GetString(stringByte));
                 s.Read(buff);
-                
-                masIdRandomElements[i] = BitConverter.ToInt32(buff);
+
+                randomLinksMap[i] = BitConverter.ToInt32(buff);
             }
             for (int i = 0; i < count; i++)
             {
-                Get(i).Random = Get(masIdRandomElements[i]);
+                Get(i).Random = Get(randomLinksMap[i]);
                 
             }
             
