@@ -11,35 +11,39 @@ namespace TestSerialize
         public void Test1()
         {
             Stream stream = new MemoryStream();
-            ListRandom random = new ListRandom();
-            ListRandom random2 = new ListRandom();
+            ListRandom randomListChecking = new ListRandom();
+            ListRandom randomListCheckable = new ListRandom();
             for (int i = 0; i < 8; i++)
             {
-                random.Add($"Some string {i + 1}");
+                randomListChecking.Add($"Some string {i + 1}");
             }
-            random.SetRandom();
-            random.Serialize(stream);
+            randomListChecking.SetRandom();
+            randomListChecking.Serialize(stream);
             stream.Position = 0;
-            random2.Deserialize(stream);
-            Assert.Equal(8, random2.Count);
-            var perem = random.Head;
-            var perem2 = random2.Head;
+            randomListCheckable.Deserialize(stream);
+            Assert.Equal(8, randomListCheckable.Count);
+            var currentNodeChecking = randomListChecking.Head;
+            var currentNodeCheckable = randomListCheckable.Head;
             for (int i = 0; i < 8; i++)
             {
-                Assert.Equal($"Some string {i + 1}", perem2.Data);
-                if (i != 0)
-                   Assert.Equal($"Some string {i}", perem2.Previous.Data);
-                if (i != 7)
-                   Assert.Equal($"Some string {i + 2}", perem2.Next.Data);
-                   //Assert.Equal(perem.Random.Data, perem2.Random.Data);
-                if (i != 0)
-                   // Assert.Equal(perem.Random.Previous.Data, perem2.Random.Previous.Data);
-                if (i != 7)
-                   // Assert.Equal(perem.Random.Next.Data, perem2.Random.Next.Data);
-                
-                    perem = perem.Next;
-                    perem2 = perem2.Next;
-               
+                Assert.Equal(currentNodeChecking.Data, currentNodeCheckable.Data);
+                if (currentNodeChecking.Previous != null && currentNodeCheckable.Previous != null)
+                    Assert.Equal(currentNodeChecking.Previous.Data, currentNodeCheckable.Previous.Data);
+
+                if (currentNodeChecking.Next != null && currentNodeCheckable.Previous != null)
+                    Assert.Equal(currentNodeChecking.Next.Data, currentNodeCheckable.Next.Data);
+
+                Assert.Equal(currentNodeChecking.Random.Data, currentNodeCheckable.Random.Data);
+
+                if (currentNodeChecking.Random.Previous != null && currentNodeCheckable.Random.Previous != null)
+                    Assert.Equal(currentNodeChecking.Random.Previous.Data, currentNodeCheckable.Random.Previous.Data);
+
+                if (currentNodeChecking.Random.Next != null && currentNodeCheckable.Random.Next != null)
+                    Assert.Equal(currentNodeChecking.Random.Next.Data, currentNodeCheckable.Random.Next.Data);
+
+                currentNodeChecking = currentNodeChecking.Next;
+                currentNodeCheckable = currentNodeCheckable.Next;
+
             }
 
 

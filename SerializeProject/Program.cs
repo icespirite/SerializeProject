@@ -38,7 +38,6 @@ namespace SerializeProject
             }
             Tail = node;
             Count++;
-            //SetRandom();
         }
         public void Clear()
         {
@@ -59,13 +58,13 @@ namespace SerializeProject
         }
         public ListNode Get(int index)
         {
-            ListNode perem = Head;
+            ListNode currentNode = Head;
             if (Count <= index) throw new ArgumentException();
             for (int i = 0; i < index; i++)
             {
-               perem = perem.Next;                
+                currentNode = currentNode.Next;                
             }
-            return perem;
+            return currentNode;
 
         }
         public void Serialize(Stream s)
@@ -114,7 +113,7 @@ namespace SerializeProject
     {
         static void Main(string[] args)
         {
-           
+             
         }
     }
 }
